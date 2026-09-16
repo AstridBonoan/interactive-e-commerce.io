@@ -1,7 +1,7 @@
 import type { RoomId } from "@/types/store";
 
 export const CABIN_ART = {
-  src: "/apartment/cabin-cutaway.png",
+  src: "/apartment/cabin-cutaway.png?v=2",
   width: 1536,
   height: 1024,
 } as const;

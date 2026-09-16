@@ -99,7 +99,7 @@ function bookVariants(prefix: string, priceCents: number): Product["variants"] {
 }
 
 function photos(slug: string): string[] {
-  return [`/products/${slug}.jpg`];
+  return [`/products/${slug}.jpg?v=2`];
 }
 
 function applianceVariants(
