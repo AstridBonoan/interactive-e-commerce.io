@@ -1,0 +1,26 @@
+1:"$Sreact.fragment"
+2:"$Sreact.suspense"
+3:I[24855,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js","/interactive-e-commerce.io/_next/static/chunks/11fb6br51tj0h.js","/interactive-e-commerce.io/_next/static/chunks/0dlzfy46r4l_c.js"],"ApartmentExplorer"]
+4:I[97367,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js"],"OutletBoundary"]
+8:I[97367,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js"],"ViewportBoundary"]
+9:I[97367,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js"],"MetadataBoundary"]
+a:I[27201,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js"],"IconMark"]
+c:I[39756,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js"],"default"]
+d:I[37457,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js"],"default"]
+11:I[1661,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js"],"Providers"]
+12:I[22016,["/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js","/interactive-e-commerce.io/_next/static/chunks/1lgsfkjl--u2s.js"],""]
+:HL["/interactive-e-commerce.io/_next/static/chunks/1s2wlio6ki9du.css","style"]
+7:X
+f:X
+f:C
+0:{"buildId":"2BLc00R5CCsc2pZcmEkiu","data":[{"rsc":["$","$1","c",{"children":[["$","$2",null,{"fallback":["$","div",null,{"className":"apartment-shell"}],"children":["$","$L3",null,{"initialRoom":"room-3"}]}],[["$","script","script-0",{"src":"/interactive-e-commerce.io/_next/static/chunks/11fb6br51tj0h.js","async":true}],["$","script","script-1",{"src":"/interactive-e-commerce.io/_next/static/chunks/0dlzfy46r4l_c.js","async":true}]],["$","$L4",null,{"children":["$","$2",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":"$@6","staleTime":"$7","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L8",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L9",null,{"children":["$","$2",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Cedar & Copper — The Apartment Shop"}],["$","meta","1",{"name":"description","content":"A clothing and appliances store hidden inside an illustrated apartment. Wander five rooms, pick up what you find, and uncover a few things that are not for sale."}],["$","link","2",{"rel":"icon","href":"/interactive-e-commerce.io/favicon.ico?favicon.2vob68tjqpejf.ico","sizes":"256x256","type":"image/x-icon"}],["$","$La","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@b","staleTime":"$7","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}],"isPartial":"$@e","staleTime":"$7","varyParams":"$f"},{"rsc":["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}],"isPartial":"$@10","staleTime":"$7","varyParams":"$f"},{"rsc":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/interactive-e-commerce.io/_next/static/chunks/1s2wlio6ki9du.css","precedence":"next"}],["$","script","script-0",{"src":"/interactive-e-commerce.io/_next/static/chunks/01l7pk6z0ms9m.js","async":true}],["$","script","script-1",{"src":"/interactive-e-commerce.io/_next/static/chunks/0wm29o8ep1gay.js","async":true}]],["$","html",null,{"lang":"en","className":"nunito_22336911-module__FLPYxG__variable pangolin_d92e2abe-module__yt13Xq__variable h-full antialiased","children":["$","body",null,{"className":"min-h-full","children":["$","$L11",null,{"children":["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}],"notFound":[["$","main",null,{"className":"page-shell","children":["$","div",null,{"className":"panel-card max-w-lg","children":[["$","h1",null,{"className":"display-title text-4xl","children":"Wrong door."}],["$","p",null,{"className":"mt-3","children":"That room is not in this apartment."}],["$","$L12",null,{"className":"ink-button-solid mt-5 inline-block","href":"/","children":"Back to Room 1"}]]}]}],[]]}]}]}]}]]}],"isPartial":"$@13","staleTime":"$7","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@14","rootVaryParams":null,"needsRuntimeRequest":"$@15"}
+5:null
+7:300
+15:true
+7:C
+14:0
+b:"$undefined"
+e:"$undefined"
+10:"$undefined"
+13:"$undefined"
+6:"$undefined"

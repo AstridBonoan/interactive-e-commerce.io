@@ -1,0 +1,4 @@
+:HL["/interactive-e-commerce.io/_next/static/chunks/1s2wlio6ki9du.css","style"]
+:HL["/interactive-e-commerce.io/_next/static/media/07454f8ad8aaac57-s.p.2kjei9psvcorz.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/interactive-e-commerce.io/_next/static/media/41b359c1ce94a1ef-s.p.0sflpcfrsunsd.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"discover","param":null,"prefetchHints":4192,"slots":{"children":{"name":"slug","param":{"type":"d","key":"better-days-poster","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"2BLc00R5CCsc2pZcmEkiu"}
