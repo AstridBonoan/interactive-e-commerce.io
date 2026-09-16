@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #2b1c12;
+  --ink-soft: #5b4634;
+  --paper: #f4e8c8;
+  --paper-deep: #ead6a8;
+  --rust: #b85c38;
+  --moss: #4f7a45;
+  --teal: #3d6b66;
+  --gold: #e6b54a;
+  --shadow: #1a120c;
+}
+
+@theme inline {
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-pangolin);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 0%, #f7efd4 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, #e7c48a 0%, transparent 35%),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--font-nunito), sans-serif;
+}
+
+.display-title {
+  font-family: var(--font-pangolin), "Comic Sans MS", cursive;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.ink-button,
+.ink-button-solid,
+.ink-input {
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 0.55rem 1rem;
+  font-weight: 700;
+  box-shadow: 0 4px 0 var(--ink);
+}
+
+.ink-button-solid {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.ink-input {
+  border-radius: 1rem;
+  box-shadow: 0 3px 0 var(--ink);
+}
+
+.panel-card {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 28px;
+  padding: 1.25rem;
+  box-shadow: 0 10px 0 var(--ink);
+}
+
+.apartment-shell {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #1a120c;
+}
+
+.apartment-stage {
+  position: relative;
+  height: 100dvh;
+  width: 100%;
+}
+
+.apartment-stage svg {
+  display: block;
+}
+
+.hotspot {
+  cursor: pointer;
+}
+
+.hotspot:hover rect,
+.hotspot:focus rect {
+  fill: #f3d27a55;
+}
+
+.intro-card {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  background:
+    linear-gradient(180deg, transparent 20%, #1a120ce8 80%),
+    #2b1c1240;
+  color: var(--paper);
+  padding: 2rem;
+  text-align: left;
+}
+
+.page-shell {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 5.5rem 0 3rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
