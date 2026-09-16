@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -36,6 +38,15 @@ jobs:
           NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
           NEXT_PUBLIC_CHECKOUT_FUNCTION_URL: ${{ vars.NEXT_PUBLIC_CHECKOUT_FUNCTION_URL }}
         run: npm run build
+
+      - name: Verify shipped images are real files
+        run: |
+          size=$(wc -c < out/apartment/cabin-cutaway.png)
+          echo "cabin-cutaway.png is ${size} bytes"
+          if [ "$size" -lt 10000 ]; then
+            echo "Expected the cabin PNG, got an LFS pointer or empty file."
+            exit 1
+          fi
 
       - name: Guard Jekyll
         run: touch out/.nojekyll
