@@ -1,9 +1,10 @@
 "use client";
 
-import { RoomScene } from "@/components/apartment/scenes";
+import { CabinStage } from "@/components/apartment/CabinStage";
 import { EggPanel } from "@/components/store/EggPanel";
 import { ProductPanel } from "@/components/store/ProductPanel";
 import { RoomRail, StoreHeader } from "@/components/store/StoreChrome";
+import { ROOM_SIGNS, isCabinViewId, type CabinViewId } from "@/data/cabin";
 import { useCatalog } from "@/lib/catalog-context";
 import type { EasterEgg, Product, RoomId } from "@/types/store";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,9 +16,9 @@ export function ApartmentExplorer({ initialRoom }: { initialRoom?: RoomId }) {
   const params = useSearchParams();
   const router = useRouter();
   const { catalog, productById } = useCatalog();
-  const requested = (params.get("room") as RoomId | null) ?? initialRoom ?? "room-1";
-  const roomId = ROOM_IDS.includes(requested) ? requested : "room-1";
-  const room = catalog.rooms.find((entry) => entry.id === roomId) ?? catalog.rooms[0];
+  const requested = params.get("room") ?? initialRoom ?? "house";
+  const viewId: CabinViewId = isCabinViewId(requested) ? requested : "house";
+  const roomId = viewId === "house" ? undefined : viewId;
 
   const [product, setProduct] = useState<Product | null>(null);
   const [egg, setEgg] = useState<EasterEgg | null>(null);
@@ -26,68 +27,76 @@ export function ApartmentExplorer({ initialRoom }: { initialRoom?: RoomId }) {
     return window.sessionStorage.getItem("atelier-entered") !== "1";
   });
 
-  const placements = useMemo(
-    () => catalog.placements.filter((placement) => placement.roomId === room.id),
-    [catalog.placements, room.id],
-  );
-  const eggs = useMemo(
-    () => catalog.easterEggs.filter((entry) => entry.roomId === room.id),
-    [catalog.easterEggs, room.id],
-  );
+  const placements = useMemo(() => {
+    if (viewId === "house") return catalog.placements;
+    return catalog.placements.filter((placement) => placement.roomId === viewId);
+  }, [catalog.placements, viewId]);
 
-  const goTo = (next: RoomId) => {
-    router.replace(`/?room=${next}`, { scroll: false });
+  const eggs = useMemo(() => {
+    if (viewId === "house") return catalog.easterEggs;
+    return catalog.easterEggs.filter((entry) => entry.roomId === viewId);
+  }, [catalog.easterEggs, viewId]);
+
+  const goTo = (next: CabinViewId) => {
+    router.replace(next === "house" ? "/" : `/?room=${next}`, { scroll: false });
   };
 
   return (
     <div className="apartment-shell">
-      <StoreHeader roomId={room.id} />
-      <div className="apartment-stage">
-        <RoomScene roomId={room.id} />
-        <svg viewBox="0 0 1600 900" className="absolute inset-0 h-full w-full">
-          {placements.map((placement) => {
-            const item = productById(placement.productId);
-            if (!item) return null;
-            return (
-              <Hotspot
-                key={placement.id}
-                x={placement.x}
-                y={placement.y}
-                width={placement.width}
-                height={placement.height}
-                label={item.name}
-                tone="product"
-                onClick={() => setProduct(item)}
-              />
-            );
-          })}
-          {eggs.map((entry) => (
+      <StoreHeader roomId={roomId} caption={viewId === "house" ? "The Cabin" : undefined} />
+      <CabinStage viewId={viewId} interactive={!product && !egg}>
+        {viewId === "house"
+          ? ROOM_IDS.map((id) => {
+              const target = catalog.rooms.find((entry) => entry.id === id);
+              const box = ROOM_SIGNS[id];
+              if (!target) return null;
+              return (
+                <Hotspot
+                  key={`room-${id}`}
+                  x={box.x}
+                  y={box.y}
+                  width={box.width}
+                  height={box.height}
+                  label={`Enter ${target.subtitle}`}
+                  tone="door"
+                  interactive={!product && !egg}
+                  onClick={() => goTo(id)}
+                />
+              );
+            })
+          : null}
+        {placements.map((placement) => {
+          const item = productById(placement.productId);
+          if (!item) return null;
+          return (
             <Hotspot
-              key={entry.id}
-              x={entry.x}
-              y={entry.y}
-              width={entry.width}
-              height={entry.height}
-              label={entry.title}
-              tone="egg"
-              onClick={() => setEgg(entry)}
+              key={placement.id}
+              x={placement.x}
+              y={placement.y}
+              width={placement.width}
+              height={placement.height}
+              label={item.name}
+              tone="product"
+              interactive={!product && !egg}
+              onClick={() => setProduct(item)}
             />
-          ))}
-          {room.connections.map((door) => (
-            <Hotspot
-              key={`${room.id}-${door.to}`}
-              x={door.x}
-              y={door.y}
-              width={door.width}
-              height={door.height}
-              label={`Enter ${door.label}`}
-              tone="door"
-              onClick={() => goTo(door.to)}
-            />
-          ))}
-        </svg>
-      </div>
-      <RoomRail current={room.id} onSelect={goTo} />
+          );
+        })}
+        {eggs.map((entry) => (
+          <Hotspot
+            key={entry.id}
+            x={entry.x}
+            y={entry.y}
+            width={entry.width}
+            height={entry.height}
+            label={entry.title}
+            tone="egg"
+            interactive={!product && !egg}
+            onClick={() => setEgg(entry)}
+          />
+        ))}
+      </CabinStage>
+      <RoomRail current={viewId} onSelect={goTo} />
       <ProductPanel
         product={product}
         onClose={() => setProduct(null)}
@@ -102,13 +111,13 @@ export function ApartmentExplorer({ initialRoom }: { initialRoom?: RoomId }) {
             setIntro(false);
           }}
         >
-          <p className="eyebrow">Not a game · a store you can walk through</p>
-          <h1 className="display-title mt-2 text-4xl">Come in. Look around.</h1>
+          <p className="eyebrow">A store you can walk through</p>
+          <h1 className="display-title mt-2 text-4xl">Come in.</h1>
           <p className="mt-3 max-w-md leading-7">
-            Five rooms, clothes left on chairs, appliances that already look lived-with, and a few
-            objects that are not for sale. Click what you find.
+            Five rooms in one cabin. Click a room to step closer, then click anything that looks
+            like it might be for sale.
           </p>
-          <p className="mt-5 font-semibold">Tap anywhere to enter {room.subtitle}</p>
+          <p className="mt-5 font-semibold">Tap anywhere to enter</p>
         </button>
       ) : null}
     </div>
@@ -122,6 +131,7 @@ function Hotspot({
   height,
   label,
   tone,
+  interactive,
   onClick,
 }: {
   x: number;
@@ -130,23 +140,46 @@ function Hotspot({
   height: number;
   label: string;
   tone: "product" | "egg" | "door";
+  interactive: boolean;
   onClick: () => void;
 }) {
-  const stroke = tone === "egg" ? "#7a1f1f" : tone === "door" ? "#2c4a46" : "#2b1c12";
+  const radius = Math.min(12, Math.round(Math.min(width, height) / 4));
   return (
-    <g className="hotspot" onClick={onClick} role="button" tabIndex={0}>
+    <g
+      className={`hotspot hotspot-${tone} ${interactive ? "pointer-events-auto" : "pointer-events-none"}`}
+      onClick={(event) => {
+        event.stopPropagation();
+        onClick();
+      }}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onClick();
+        }
+      }}
+    >
       <rect
         x={x}
         y={y}
         width={width}
         height={height}
-        rx="14"
-        fill={tone === "egg" ? "#c45c4a22" : "#f4e8c814"}
-        stroke={stroke}
-        strokeWidth="2"
-        strokeDasharray={tone === "door" ? "8 6" : "0"}
+        rx={radius}
+        fill="#f4d27a"
+        fillOpacity={0.01}
+        stroke="transparent"
+        pointerEvents="all"
       />
       <title>{label}</title>
+      <text
+        className="hotspot-label"
+        x={x + width / 2}
+        y={Math.max(22, y - 10)}
+        textAnchor="middle"
+      >
+        {label}
+      </text>
     </g>
   );
 }

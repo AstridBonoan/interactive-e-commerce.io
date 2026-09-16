@@ -19,7 +19,7 @@ export function EggDetails({ slug }: { slug: string }) {
     <main className="page-shell">
       <StoreHeader />
       <article className="panel-card max-w-2xl">
-        <p className="eyebrow">{egg.kind}</p>
+        <p className="eyebrow">{egg.kind === "collaborator" ? "Shout-out" : egg.kind}</p>
         <h1 className="display-title mt-2 text-4xl">{egg.title}</h1>
         <p className="mt-3 italic">{egg.teaser}</p>
         <p className="mt-4 leading-7">{egg.body}</p>

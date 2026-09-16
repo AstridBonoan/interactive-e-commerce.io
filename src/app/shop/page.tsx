@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductArt } from "@/components/art/ProductArt";
+import { ProductPhoto } from "@/components/store/ProductPhoto";
 import { StoreHeader } from "@/components/store/StoreChrome";
 import { money } from "@/data/catalog";
 import { useCatalog } from "@/lib/catalog-context";
@@ -23,7 +23,7 @@ export default function ShopPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {catalog.products.filter((product) => product.active).map((product) => (
           <Link key={product.id} href={`/product/${product.slug}/`} className="panel-card">
-            <ProductArt kind={product.images[0]} accent={product.accent} className="w-full" />
+            <ProductPhoto product={product} sizes="tile" />
             <p className="eyebrow mt-3">{product.category}</p>
             <h2 className="display-title text-2xl">{product.name}</h2>
             <p className="mt-1">{money(product.priceCents)}</p>

@@ -1,12 +1,13 @@
 "use client";
 
-import { ProductArt } from "@/components/art/ProductArt";
+import { ProductPhoto } from "@/components/store/ProductPhoto";
 import { money } from "@/data/catalog";
 import { findVariant, useCart } from "@/lib/cart";
+import { useCatalog } from "@/lib/catalog-context";
 import type { Product } from "@/types/store";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Props = {
   product: Product | null;
@@ -32,18 +33,30 @@ function PanelBody({
   onBuyNow?: Props["onBuyNow"];
 }) {
   const { add } = useCart();
+  const { catalog } = useCatalog();
+  const [viewing, setViewing] = useState(product);
   const [quantity, setQuantity] = useState(1);
   const [choices, setChoices] = useState<Record<string, string>>(() =>
     Object.fromEntries(product.optionTypes.map((option) => [option.name, option.values[0]])),
   );
 
+  useEffect(() => {
+    setViewing(product);
+    setQuantity(1);
+    setChoices(Object.fromEntries(product.optionTypes.map((option) => [option.name, option.values[0]])));
+  }, [product]);
+
+  const related = catalog.products.filter(
+    (entry) => entry.active && entry.category === viewing.category,
+  );
+
   const variant = useMemo(() => {
     return (
-      product.variants.find((entry) =>
+      viewing.variants.find((entry) =>
         Object.entries(choices).every(([key, value]) => entry.options[key] === value),
-      ) ?? product.variants[0]
+      ) ?? viewing.variants[0]
     );
-  }, [choices, product.variants]);
+  }, [choices, viewing.variants]);
 
   return (
     <motion.div
@@ -60,20 +73,50 @@ function PanelBody({
         exit={{ y: 24, opacity: 0 }}
         onClick={(event) => event.stopPropagation()}
       >
-        <button type="button" className="absolute right-4 top-4 ink-button px-3 py-1 text-sm" onClick={onClose}>
+        <button type="button" className="absolute right-4 top-4 z-10 ink-button px-3 py-1 text-sm" onClick={onClose}>
           Close
         </button>
         <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr]">
-          <ProductArt kind={product.images[0]} accent={product.accent} className="w-full" />
           <div>
-            <p className="eyebrow">{product.kind === "clothing" ? "Clothing" : "Appliance"}</p>
-            <h2 className="display-title mt-1 text-3xl">{product.name}</h2>
+            <ProductPhoto product={viewing} />
+            {related.length > 1 ? (
+              <div className="mt-4">
+                <p className="eyebrow">On sale in {viewing.category.toLowerCase()}</p>
+                <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+                  {related.map((entry) => (
+                    <button
+                      key={entry.id}
+                      type="button"
+                      aria-label={entry.name}
+                      onClick={() => {
+                        setViewing(entry);
+                        setQuantity(1);
+                        setChoices(
+                          Object.fromEntries(entry.optionTypes.map((option) => [option.name, option.values[0]])),
+                        );
+                      }}
+                      className={`w-20 shrink-0 rounded-2xl text-left ${
+                        entry.id === viewing.id ? "ring-2 ring-[var(--ink)]" : ""
+                      }`}
+                    >
+                      <ProductPhoto product={entry} sizes="tile" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+          <div>
+            <p className="eyebrow">
+              {viewing.kind === "clothing" ? "Clothing" : viewing.kind === "book" ? "Book" : "Appliance"}
+            </p>
+            <h2 className="display-title mt-1 text-3xl">{viewing.name}</h2>
             <p className="mt-2 text-lg text-[var(--ink-soft)]">{money(variant.priceCents)}</p>
-            <p className="mt-4 leading-7">{product.description}</p>
-            <p className="mt-3 text-sm italic text-[var(--ink-soft)]">{product.story}</p>
+            <p className="mt-4 leading-7">{viewing.description}</p>
+            <p className="mt-3 text-sm italic text-[var(--ink-soft)]">{viewing.story}</p>
 
             <div className="mt-5 space-y-3">
-              {product.optionTypes.map((option) => (
+              {viewing.optionTypes.map((option) => (
                 <label key={option.id} className="block text-sm">
                   <span className="font-semibold">{option.name}</span>
                   <select
@@ -108,20 +151,20 @@ function PanelBody({
             <div className="mt-6 flex flex-wrap gap-3">
               <button
                 className="ink-button-solid"
-                onClick={() => add(product.id, variant.id, quantity)}
+                onClick={() => add(viewing.id, variant.id, quantity)}
               >
                 Add to Cart
               </button>
               <button
                 className="ink-button"
                 onClick={() => {
-                  add(product.id, variant.id, quantity);
-                  onBuyNow?.(product, variant.id, quantity);
+                  add(viewing.id, variant.id, quantity);
+                  onBuyNow?.(viewing, variant.id, quantity);
                 }}
               >
                 Buy Now
               </button>
-              <Link className="ink-button" href={`/product/${product.slug}/`}>
+              <Link className="ink-button" href={`/product/${viewing.slug}/`}>
                 Full page
               </Link>
             </div>

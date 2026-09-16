@@ -1,0 +1,10 @@
+{
+  "description": "Browse and customize a diverse range of household and lifestyle products including apparel, furniture, and electronics for personalized living spaces.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

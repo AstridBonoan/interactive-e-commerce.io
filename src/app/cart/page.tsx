@@ -1,5 +1,6 @@
 "use client";
 
+import { ProductPhoto } from "@/components/store/ProductPhoto";
 import { StoreHeader } from "@/components/store/StoreChrome";
 import { money } from "@/data/catalog";
 import { findVariant, useCart } from "@/lib/cart";
@@ -37,9 +38,12 @@ export default function CartPage() {
         ) : (
           detailed.map((entry) => (
             <div key={`${entry!.product.id}-${entry!.variant.id}`} className="panel-card flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <h2 className="display-title text-2xl">{entry!.product.name}</h2>
-                <p className="text-sm text-[var(--ink-soft)]">{entry!.variant.label}</p>
+              <div className="flex items-center gap-4">
+                <ProductPhoto product={entry!.product} sizes="thumb" />
+                <div>
+                  <h2 className="display-title text-2xl">{entry!.product.name}</h2>
+                  <p className="text-sm text-[var(--ink-soft)]">{entry!.variant.label}</p>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <input

@@ -24,7 +24,7 @@ export function EggPanel({ egg, onClose }: { egg: EasterEgg | null; onClose: () 
             <button className="absolute right-4 top-4 ink-button px-3 py-1 text-sm" onClick={onClose}>
               Close
             </button>
-            <p className="eyebrow">Easter egg · {egg.kind}</p>
+            <p className="eyebrow">{egg.kind === "collaborator" ? "Shout-out" : `Easter egg · ${egg.kind}`}</p>
             <h2 className="display-title mt-2 text-3xl">{egg.title}</h2>
             <p className="mt-2 italic text-[var(--ink-soft)]">{egg.teaser}</p>
             <p className="mt-4 leading-7">{egg.body}</p>

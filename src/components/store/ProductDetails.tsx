@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductArt } from "@/components/art/ProductArt";
+import { ProductPhoto } from "@/components/store/ProductPhoto";
 import { StoreHeader } from "@/components/store/StoreChrome";
 import { ProductForm } from "@/components/store/ProductPanel";
 import { money } from "@/data/catalog";
@@ -33,7 +33,7 @@ export function ProductDetails({ slug }: { slug: string }) {
     <main className="page-shell">
       <StoreHeader />
       <div className="panel-card grid gap-8 md:grid-cols-[0.9fr_1.1fr]">
-        <ProductArt kind={product.images[0]} accent={product.accent} className="w-full" />
+        <ProductPhoto product={product} />
         <div>
           <p className="eyebrow">{product.category}</p>
           <h1 className="display-title mt-1 text-4xl">{product.name}</h1>

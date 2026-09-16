@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Oswald', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+}
+
+:root {
+  --background: #0a0a0b;
+  --foreground: #e8e4dc;
+  --card: #141416;
+  --card-foreground: #e8e4dc;
+  --primary: #ff2d55;
+  --primary-foreground: #ffffff;
+  --secondary: #1e1e22;
+  --secondary-foreground: #a09a92;
+  --muted: #1a1a1e;
+  --muted-foreground: #6b6460;
+  --accent: #7c3aed;
+  --accent-foreground: #ffffff;
+  --border: #2a2a2e;
+  --ring: #ff2d55;
+  --radius: 4px;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.neon-red {
+  color: #ff2d55;
+  text-shadow: 0 0 8px #ff2d55, 0 0 20px #ff2d55, 0 0 40px #ff003c;
+}
+
+.neon-box-red {
+  box-shadow: 0 0 8px #ff2d55, 0 0 20px #ff2d5540, inset 0 0 8px #ff2d5520;
+  border-color: #ff2d55;
+}
+
+.neon-purple {
+  box-shadow: 0 0 8px #7c3aed, 0 0 20px #7c3aed40;
+  border-color: #7c3aed;
+}
+
+@keyframes flicker {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.4; }
+  97% { opacity: 1; }
+  98% { opacity: 0.2; }
+  99% { opacity: 1; }
+}
+
+.flicker {
+  animation: flicker 4s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px #ff2d55); }
+  50% { filter: drop-shadow(0 0 14px #ff2d55) drop-shadow(0 0 28px #ff003c); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}

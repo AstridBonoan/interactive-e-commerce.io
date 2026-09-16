@@ -5,16 +5,16 @@ import { money } from "@/data/catalog";
 import { useAuth } from "@/lib/auth-context";
 import { useCatalog } from "@/lib/catalog-context";
 import { seedCatalog } from "@/data/catalog";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 const tabs = ["Products", "Rooms", "Eggs", "Orders", "Customers", "Media"] as const;
 
 export default function CmsPage() {
   const { catalog, setCatalog } = useCatalog();
-  const { user, enabled } = useAuth();
+  const { user, isAdmin, loading } = useAuth();
   const [tab, setTab] = useState<(typeof tabs)[number]>("Products");
   const [query, setQuery] = useState("");
-
   const products = useMemo(
     () =>
       catalog.products.filter((product) =>
@@ -22,6 +22,34 @@ export default function CmsPage() {
       ),
     [catalog.products, query],
   );
+
+  if (loading) {
+    return (
+      <main className="page-shell">
+        <StoreHeader />
+        <p className="text-[var(--ink-soft)]">Checking account…</p>
+      </main>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <main className="page-shell">
+        <StoreHeader />
+        <div className="panel-card max-w-lg">
+          <p className="eyebrow">Admin only</p>
+          <h1 className="display-title mt-2 text-4xl">Content management</h1>
+          <p className="mt-3 text-[var(--ink-soft)]">
+            The editor lives with an admin account. Create or sign in as admin, then open it from
+            Account.
+          </p>
+          <Link className="ink-button-solid mt-5 inline-block" href={user ? "/account/" : "/login/"}>
+            {user ? "Back to account" : "Sign in"}
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="page-shell">
@@ -31,7 +59,7 @@ export default function CmsPage() {
       <p className="mt-2 max-w-3xl text-[var(--ink-soft)]">
         Modular and GitHub-friendly: seed data lives in <code>src/data/catalog.ts</code>. This
         dashboard edits a local overlay and is ready to sync through Supabase tables, Storage, and
-        Auth. {enabled ? (user ? `Signed in as ${user.email}.` : "Sign in to sync remotely.") : "Running in local demo mode."}
+        Auth. Signed in as {user?.email}.
       </p>
 
       <div className="mt-5 flex flex-wrap gap-2">

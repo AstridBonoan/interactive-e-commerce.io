@@ -1,6 +1,6 @@
 export type RoomId = "room-1" | "room-2" | "room-3" | "room-4" | "room-5";
 
-export type ProductKind = "clothing" | "appliance";
+export type ProductKind = "clothing" | "appliance" | "book";
 
 export type VariantOption = {
   id: string;

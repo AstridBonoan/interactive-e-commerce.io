@@ -7,7 +7,7 @@ import { useCatalog } from "@/lib/catalog-context";
 import Link from "next/link";
 
 export default function AccountPage() {
-  const { user, enabled } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
   const { catalog } = useCatalog();
   const orders = catalog.orders.filter((order) => !user || order.email === user.email);
 
@@ -16,8 +16,24 @@ export default function AccountPage() {
       <StoreHeader />
       <h1 className="display-title text-4xl">Account</h1>
       <p className="mt-2 text-[var(--ink-soft)]">
-        {enabled && user ? `Hello, ${user.email}` : "Local orders from this browser appear here."}
+        {user ? `Hello, ${user.email}` : "Sign in to keep orders with your account."}
       </p>
+      <div className="mt-5 flex flex-wrap gap-3">
+        {user ? (
+          <button className="ink-button" onClick={() => void signOut()}>
+            Sign out
+          </button>
+        ) : (
+          <Link className="ink-button" href="/login/">
+            Sign in
+          </Link>
+        )}
+        {isAdmin ? (
+          <Link className="ink-button-solid" href="/cms/">
+            Content Management
+          </Link>
+        ) : null}
+      </div>
       <div className="mt-6 space-y-3">
         {orders.length === 0 ? (
           <div className="panel-card">
