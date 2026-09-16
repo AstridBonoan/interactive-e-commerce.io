@@ -30,5 +30,13 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "supabase/functions"]
+  "exclude": [
+    "node_modules",
+    "supabase/functions",
+    "Home and Living Items",
+    "vite.config.ts",
+    "src/App.tsx",
+    "src/main.tsx",
+    "src/vite-env.d.ts"
+  ]
 }
